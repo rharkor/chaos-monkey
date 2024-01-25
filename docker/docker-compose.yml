@@ -36,7 +36,7 @@ services:
     networks:
       - default
     volumes:
-      - postgres-data:/var/lib/postgresql/data
+      - chaos-monkey-postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASS}
@@ -59,11 +59,11 @@ services:
       options:
         max-size: "50m"
     volumes:
-      - redis-data:/data
+      - chaos-monkey-redis-data:/data
 
 volumes:
-  postgres-data:
-  redis-data:
+  chaos-monkey-postgres-data:
+  chaos-monkey-redis-data:
 
 networks:
   default:
