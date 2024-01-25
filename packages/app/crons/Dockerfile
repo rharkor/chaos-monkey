@@ -11,6 +11,8 @@ ENV NODE_ENV production
 COPY package.json .
 COPY package-lock.json .
 COPY packages/app/prisma/schema.prisma ./packages/app/prisma/schema.prisma
+COPY packages/app/package.json ./packages/app/package.json
+COPY packages/lib/package.json ./packages/lib/package.json
 
 RUN npm i --only=production
 
