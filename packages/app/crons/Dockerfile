@@ -9,10 +9,10 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
 
 COPY package.json .
-COPY prisma/schema.prisma ./prisma/schema.prisma
+COPY packages/app/prisma/schema.prisma ./packages/app/prisma/schema.prisma
 
 RUN npm i --only=production
 
 COPY . .
 
-CMD [ "npm", "run", "cron" ]
+CMD [ "npm", "run", "cron", "-w", "packages/app" ]
