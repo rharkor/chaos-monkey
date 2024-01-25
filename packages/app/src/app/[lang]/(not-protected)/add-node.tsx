@@ -32,11 +32,12 @@ export default function AddNode() {
 
   const onSubmit = async (data: z.infer<ReturnType<typeof formSchema>>) => {
     await addNodeMutation.mutateAsync(data)
-    utils.node.invalidate()
     onClose()
+    utils.node.invalidate()
   }
 
   useEffect(() => {
+    if (!addNodeMutation.isSuccess) return
     form.reset()
   }, [addNodeMutation.isSuccess, form])
 
@@ -52,8 +53,22 @@ export default function AddNode() {
               <ModalHeader className="flex flex-col gap-1">{dictionary.addNode}</ModalHeader>
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <ModalBody>
-                  <FormField name="name" placeholder="Node Name" form={form} type="text" />
-                  <FormField name="ip" form={form} type="text" placeholder="http://yourdomain.com" />
+                  <FormField
+                    name="name"
+                    label={dictionary.nodeName}
+                    placeholder="My Node"
+                    form={form}
+                    type="text"
+                    isRequired
+                  />
+                  <FormField
+                    name="ip"
+                    form={form}
+                    type="text"
+                    label={dictionary.nodeIp}
+                    placeholder="http://yourdomain.com"
+                    isRequired
+                  />
                 </ModalBody>
                 <ModalFooter>
                   <Button color="default" variant="light" onPress={onClose}>

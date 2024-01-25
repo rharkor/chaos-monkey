@@ -52,8 +52,22 @@ export default function UpdateNode({ id, name, ip }: { id: string; name: string;
               <ModalHeader className="flex flex-col gap-1">{dictionary.updateNode}</ModalHeader>
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <ModalBody>
-                  <FormField name="name" placeholder="Node Name" form={form} type="text" />
-                  <FormField name="ip" form={form} type="text" placeholder="http://yourdomain.com" />
+                  <FormField
+                    name="name"
+                    label={dictionary.nodeName}
+                    placeholder="My Node"
+                    form={form}
+                    type="text"
+                    isRequired
+                  />
+                  <FormField
+                    name="ip"
+                    form={form}
+                    type="text"
+                    label={dictionary.nodeIp}
+                    placeholder="http://yourdomain.com"
+                    isRequired
+                  />
                 </ModalBody>
                 <ModalFooter>
                   <Button color="default" variant="light" onPress={onClose}>

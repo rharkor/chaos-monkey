@@ -5,12 +5,18 @@ import { z } from "zod"
 import { useDictionary } from "@/contexts/dictionary/utils"
 import { getNodesResponseSchema } from "@/lib/schemas/nodes"
 import { cn } from "@/lib/utils"
-import { Card, CardBody, CardFooter, CardHeader, Tooltip } from "@nextui-org/react"
+import { Card, CardBody, CardFooter, CardHeader, Link, Tooltip } from "@nextui-org/react"
 
 import DeleteNode from "./delete-node"
 import UpdateNode from "./update-node"
 
-export default function Node({ node }: { node: z.infer<ReturnType<typeof getNodesResponseSchema>>["nodes"][number] }) {
+export default function Node({
+  node,
+  isLoggedIn,
+}: {
+  node: z.infer<ReturnType<typeof getNodesResponseSchema>>["nodes"][number] & { rank: number }
+  isLoggedIn: boolean
+}) {
   const dictionary = useDictionary()
 
   const last20Status = node.results.slice(-20)
@@ -28,19 +34,39 @@ export default function Node({ node }: { node: z.infer<ReturnType<typeof getNode
   ].reverse()
 
   return (
-    <Card>
-      <CardHeader>
-        <p>
-          {node.name}
-          <span className="text-muted-foreground ml-2 text-xs">({node.ip})</span>
-        </p>
+    <Card className="relative h-max min-w-[260px] max-w-[320px] flex-1">
+      <CardHeader className="z-10 flex flex-col items-start gap-1">
+        <p className="max-w-[220px] truncate">{node.name}</p>
+        <span className="">
+          (
+          <Link
+            href={`${node.ip.startsWith("http") ? "" : "http://"}${node.ip}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary/70 text-xs hover:underline"
+          >
+            {node.ip}
+          </Link>
+          )
+        </span>
+        <div className="absolute right-2 top-2">
+          <p
+            className={cn("text-muted-foreground text-xl font-medium", {
+              "text-[#FFD700]": node.rank === 1,
+              "text-[#C0C0C0]": node.rank === 2,
+              "text-[#CD7F32]": node.rank === 3,
+            })}
+          >
+            #{node.rank}
+          </p>
+        </div>
       </CardHeader>
-      <CardBody className="flex flex-col gap-2">
+      <CardBody className="z-10 flex flex-col gap-2">
         <p className="text-foreground text-center text-xl font-medium">
           {node.points}
           <span className="text-muted-foreground ml-1 text-xs">{dictionary.points}</span>
         </p>
-        <div className="flex flex-row gap-1">
+        <div className="flex flex-row justify-center gap-1">
           {last20StatusFormattedWithEmpty.map((status, index) => (
             <Tooltip
               content={
@@ -67,10 +93,13 @@ export default function Node({ node }: { node: z.infer<ReturnType<typeof getNode
           ))}
         </div>
       </CardBody>
-      <CardFooter className="flex flex-row gap-2">
-        <UpdateNode id={node.id} name={node.name} ip={node.ip} />
-        <DeleteNode id={node.id} name={node.name} ip={node.ip} />
-      </CardFooter>
+      {isLoggedIn && (
+        <CardFooter className="z-10 flex flex-row items-center justify-center gap-2">
+          <UpdateNode id={node.id} name={node.name} ip={node.ip} />
+          <DeleteNode id={node.id} name={node.name} ip={node.ip} />
+        </CardFooter>
+      )}
+      <div className="pointer-events-none absolute left-0 top-0 z-0 h-full w-full bg-gradient-to-b from-transparent to-black opacity-50" />
     </Card>
   )
 }

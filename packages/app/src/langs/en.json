@@ -19,7 +19,8 @@
     "node": {
       "min3": "Node name must be at least 3 characters long.",
       "max30": "Node name must be at most 30 characters long.",
-      "exist": "Node name/ip already exists."
+      "exist": "Node name/ip already exists.",
+      "ipEmpty": "Node ip is empty."
     },
     "username": {
       "required": "Username is required.",
@@ -238,5 +239,7 @@
   "points": "points",
   "disable": "Disable",
   "enable": "Enable",
-  "deleteSessionData": "Delete session"
+  "deleteSessionData": "Delete session",
+  "nodeName": "Node name",
+  "nodeIp": "Node ip"
 }

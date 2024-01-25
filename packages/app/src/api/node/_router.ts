@@ -11,7 +11,7 @@ import {
   updateSessionResponseSchema,
   updateSessionSchema,
 } from "@/lib/schemas/nodes"
-import { authenticatedProcedure, router } from "@/lib/server/trpc"
+import { authenticatedProcedure, publicProcedure, router } from "@/lib/server/trpc"
 
 import { addNode, deleteNode, deleteSession, updateNode, updateSession } from "./mutations"
 import { getNodes, getSession } from "./queries"
@@ -20,8 +20,8 @@ export const nodeRouter = router({
   addNode: authenticatedProcedure.input(addNodeSchema()).output(addNodeResponseSchema()).mutation(addNode),
   deleteNode: authenticatedProcedure.input(deleteNodeSchema()).output(deleteNodeResponseSchema()).mutation(deleteNode),
   updateNode: authenticatedProcedure.input(updateNodeSchema()).output(updateNodeResponseSchema()).mutation(updateNode),
-  getNodes: authenticatedProcedure.output(getNodesResponseSchema()).query(getNodes),
-  getSession: authenticatedProcedure.output(getSessionResponseSchema()).query(getSession),
+  getNodes: publicProcedure.output(getNodesResponseSchema()).query(getNodes),
+  getSession: publicProcedure.output(getSessionResponseSchema()).query(getSession),
   updateSession: authenticatedProcedure
     .input(updateSessionSchema())
     .output(updateSessionResponseSchema())
