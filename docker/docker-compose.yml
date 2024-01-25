@@ -3,8 +3,8 @@ version: "3.8"
 services:
   app:
     build:
-      context: ../packages/app
-      dockerfile: Dockerfile
+      context: ..
+      dockerfile: packages/app/Dockerfile
     container_name: chaos-monkey_app
     restart: unless-stopped
     logging:
@@ -16,8 +16,8 @@ services:
 
   crons:
     build:
-      context: ../packages/app
-      dockerfile: crons/Dockerfile
+      context: ..
+      dockerfile: packages/app/crons/Dockerfile
     container_name: chaos-monkey_crons
     restart: unless-stopped
     logging:
