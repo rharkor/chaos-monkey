@@ -15,7 +15,7 @@ import {
   signUpSchema,
   verifyTotpSchema,
 } from "@/lib/schemas/auth"
-import { addNodeSchema, deleteNodeSchema, updateNodeSchema } from "@/lib/schemas/nodes"
+import { addNodeSchema, deleteNodeSchema, updateNodeSchema, updateSessionSchema } from "@/lib/schemas/nodes"
 import { html, plainText, subject } from "@/lib/templates/mail/verify-email"
 import { ApiError, ensureLoggedIn, generateRandomSecret, handleApiError } from "@/lib/utils/server-utils"
 import { apiInputFromSchema } from "@/types"
@@ -276,6 +276,34 @@ export const updateNode = async ({ input, ctx: { session } }: apiInputFromSchema
         }
       }
     }
+    return handleApiError(error)
+  }
+}
+
+export const updateSession = async ({ input, ctx: { session } }: apiInputFromSchema<typeof updateSessionSchema>) => {
+  ensureLoggedIn(session)
+  try {
+    const { enabled, id } = input
+    await prisma.session.update({
+      where: {
+        id,
+      },
+      data: {
+        enabled,
+      },
+    })
+    return { success: true }
+  } catch (error: unknown) {
+    return handleApiError(error)
+  }
+}
+
+export const deleteSession = async ({ ctx: { session } }: apiInputFromSchema<undefined>) => {
+  ensureLoggedIn(session)
+  try {
+    await prisma.pingResult.deleteMany()
+    return { success: true }
+  } catch (error: unknown) {
     return handleApiError(error)
   }
 }

@@ -57,6 +57,18 @@ async function main() {
         })
       )
     }
+
+    // SESSION
+    const sessionExists = await prisma.session.findFirst()
+    if (!sessionExists) {
+      await handleAction(
+        "Creating session",
+        "Session created",
+        prisma.session.create({
+          data: {},
+        })
+      )
+    }
   } catch (e) {
     logger.error(e)
     process.exit(1)

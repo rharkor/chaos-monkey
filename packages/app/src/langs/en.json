@@ -234,5 +234,9 @@
   "statusError": "Error",
   "updateNode": "Update node",
   "deleteNode": "Delete node",
-  "deleteNodeConfirmation": "Are you sure you want to delete this node?"
+  "deleteNodeConfirmation": "Are you sure you want to delete this node?",
+  "points": "points",
+  "disable": "Disable",
+  "enable": "Enable",
+  "deleteSessionData": "Delete session"
 }

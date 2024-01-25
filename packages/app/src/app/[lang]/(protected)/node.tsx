@@ -19,10 +19,11 @@ export default function Node({ node }: { node: z.infer<ReturnType<typeof getNode
       isOk: parseInt(status.status) >= 200 && parseInt(status.status) < 300,
       date: new Date(status.createdAt).toLocaleString(),
       isSkel: false,
+      code: status.status,
     }
   })
   const last20StatusFormattedWithEmpty = [
-    ...Array(20 - last20StatusFormatted.length).fill({ isOk: false, date: "", isSkel: true }),
+    ...Array(20 - last20StatusFormatted.length).fill({ isOk: false, date: "", isSkel: true, code: 0 }),
     ...last20StatusFormatted,
   ].reverse()
 
@@ -34,26 +35,37 @@ export default function Node({ node }: { node: z.infer<ReturnType<typeof getNode
           <span className="text-muted-foreground ml-2 text-xs">({node.ip})</span>
         </p>
       </CardHeader>
-      <CardBody className="flex flex-row gap-1">
-        {last20StatusFormattedWithEmpty.map((status, index) => (
-          <Tooltip
-            content={
-              <>
-                {status.isSkel === false && <p>{status.isOk ? dictionary.statusOk : dictionary.statusError}</p>}
-                <p>{status.date}</p>
-              </>
-            }
-            key={index}
-          >
-            <div
-              className={cn("h-5 w-2 rounded-full", {
-                "bg-green-500": status.isOk,
-                "bg-red-500": !status.isOk,
-                "bg-muted-foreground animate-pulse": status.isSkel,
-              })}
-            />
-          </Tooltip>
-        ))}
+      <CardBody className="flex flex-col gap-2">
+        <p className="text-foreground text-center text-xl font-medium">
+          {node.points}
+          <span className="text-muted-foreground ml-1 text-xs">{dictionary.points}</span>
+        </p>
+        <div className="flex flex-row gap-1">
+          {last20StatusFormattedWithEmpty.map((status, index) => (
+            <Tooltip
+              content={
+                <>
+                  {status.isSkel === false && (
+                    <p>
+                      {status.isOk ? dictionary.statusOk : dictionary.statusError}:{" "}
+                      {status.code === "0" ? "Timeout" : status.code}
+                    </p>
+                  )}
+                  <p>{status.date}</p>
+                </>
+              }
+              key={index}
+            >
+              <div
+                className={cn("h-5 w-2 rounded-full", {
+                  "bg-green-500": status.isOk,
+                  "bg-red-500": !status.isOk,
+                  "bg-muted-foreground animate-pulse": status.isSkel,
+                })}
+              />
+            </Tooltip>
+          ))}
+        </div>
       </CardBody>
       <CardFooter className="flex flex-row gap-2">
         <UpdateNode id={node.id} name={node.name} ip={node.ip} />

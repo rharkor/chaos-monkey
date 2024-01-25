@@ -148,6 +148,29 @@ export const getNodesResponseSchema = () =>
             createdAt: z.string(),
           })
         ),
+        points: z.number(),
       })
     ),
+  })
+
+export const getSessionResponseSchema = () =>
+  z.object({
+    enabled: z.boolean(),
+    id: z.string(),
+  })
+
+export const updateSessionSchema = () =>
+  z.object({
+    enabled: z.boolean(),
+    id: z.string(),
+  })
+
+export const updateSessionResponseSchema = () =>
+  z.object({
+    success: z.boolean(),
+  })
+
+export const deleteSessionResponseSchema = () =>
+  z.object({
+    success: z.boolean(),
   })

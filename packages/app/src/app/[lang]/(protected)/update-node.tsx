@@ -53,7 +53,7 @@ export default function UpdateNode({ id, name, ip }: { id: string; name: string;
               <form onSubmit={form.handleSubmit(onSubmit)}>
                 <ModalBody>
                   <FormField name="name" placeholder="Node Name" form={form} type="text" />
-                  <FormField name="ip" form={form} type="text" placeholder="0.0.0.0" />
+                  <FormField name="ip" form={form} type="text" placeholder="http://yourdomain.com" />
                 </ModalBody>
                 <ModalFooter>
                   <Button color="default" variant="light" onPress={onClose}>

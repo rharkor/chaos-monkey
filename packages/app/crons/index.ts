@@ -3,25 +3,47 @@
 // Exemple: If you're using a cron job to send a newsletter,
 // you should not handle it here unless you are sure that it will be only one instance of the app.
 
-//** UNCOMMENT THIS TO USE CRON JOBS */
-/*
 import { CronJob } from "cron"
 import { config } from "dotenv"
 
+import { prisma } from "@/lib/prisma"
 import { logger } from "@lib/logger"
+
+import { pingPromise } from "./utils"
 config()
 
-//? Do a task every day
-
 new CronJob(
-  "0 0 * * *",
+  //* Every 30 seconds
+  "*/30 * * * * *",
   async () => {
     const maxDurationWarning = 1000 * 60 * 5 // 5 minutes
-    const name = "CronName"
+    const name = "Ping nodes"
     const now = new Date()
     //? Do something
-    async function something() {}
-    await something().catch((err) => {
+    async function pingNodes() {
+      const session = await prisma.session.findFirst()
+      if (!session || !session.enabled) return
+      const nodes = await prisma.node.findMany()
+      await Promise.all(
+        nodes.map(async (node) => {
+          const pingResult = await pingPromise(node.ip)
+          logger.debug(`[${now.toLocaleString()}] ${node.name} ping result: ${pingResult}`)
+          return prisma.pingResult
+            .create({
+              data: {
+                node: {
+                  connect: {
+                    id: node.id,
+                  },
+                },
+                status: pingResult.toString(),
+              },
+            })
+            .catch(() => {})
+        })
+      )
+    }
+    await pingNodes().catch((err) => {
       logger.error(
         `[${now.toLocaleString()}] ${name} started at ${now.toLocaleString()} and failed after ${
           new Date().getTime() - now.getTime()
@@ -36,4 +58,3 @@ new CronJob(
   true,
   "Europe/Paris"
 )
-*/
