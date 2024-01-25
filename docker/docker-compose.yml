@@ -2,7 +2,9 @@ version: "3.8"
 
 services:
   app:
-    image: DOCKER_DEPLOY_APP_IMAGE
+    build:
+      context: packages/app
+      dockerfile: packages/app/dockerfile
     container_name: chaos-monkey_app
     restart: unless-stopped
     logging:
@@ -10,41 +12,18 @@ services:
       options:
         max-size: "50m"
     ports:
-      - "3000:3000"
+      - "10074:3000"
 
   crons:
-    image: DOCKER_DEPLOY_CRONS_IMAGE
+    build:
+      context: packages/app
+      dockerfile: packages/app/crons/dockerfile
     container_name: chaos-monkey_crons
     restart: unless-stopped
     logging:
       driver: "json-file"
       options:
         max-size: "50m"
-
-  docs:
-    image: DOCKER_DEPLOY_DOCS_IMAGE
-    container_name: chaos-monkey_docs
-    restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "50m"
-    ports:
-      - "3001:3000"
-    #? You can comment the volumes section if you are not using the static files
-    volumes:
-      - .:/docs/.docusaurus
-
-  landing:
-    image: DOCKER_DEPLOY_LANDING_IMAGE
-    container_name: chaos-monkey_landing
-    restart: unless-stopped
-    logging:
-      driver: "json-file"
-      options:
-        max-size: "50m"
-    ports:
-      - "3002:3000"
 
   db:
     image: postgres:latest
@@ -61,8 +40,6 @@ services:
       driver: "json-file"
       options:
         max-size: "50m"
-    ports:
-      - "5432:5432"
 
   redis:
     restart: unless-stopped
@@ -75,8 +52,6 @@ services:
         max-size: "50m"
     volumes:
       - redis-data:/data
-    ports:
-      - "6379:6379"
 
 volumes:
   postgres-data:
