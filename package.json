@@ -1,5 +1,5 @@
 {
-  "name": "next-boilerplate",
+  "name": "chaos-monkey",
   "private": true,
   "scripts": {
     "init": "npm run init -w packages/scripts",
@@ -21,8 +21,6 @@
   "workspaces": [
     "packages/scripts",
     "packages/app",
-    "packages/docs",
-    "packages/landing",
     "packages/lib"
   ],
   "dependencies": {

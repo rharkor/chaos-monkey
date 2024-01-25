@@ -1,5 +1,5 @@
 {
-  "name": "@next-boilerplate/lib",
+  "name": "@chaos-monkey/lib",
   "scripts": {
     "lint": "eslint --ext .ts,.tsx .",
     "lint:fix": "eslint --fix --ext .ts,.tsx .",
