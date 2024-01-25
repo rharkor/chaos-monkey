@@ -16,6 +16,11 @@
         "required": "Veuillez entrer une chaîne de caractères."
       }
     },
+    "node": {
+      "min3": "Le nom du node doit être au moins 3 caractères long.",
+      "max30": "Le nom du node doit être au maximum 30 caractères long.",
+      "exist": "Le nom/ip du node existe déjà."
+    },
     "username": {
       "required": "Nom d'utilisateur requis",
       "min3": "Le nom d'utilisateur doit être au moins 3 caractères long.",
@@ -59,7 +64,7 @@
   },
   "home": "Accueil",
   "homePage": {
-    "title": "Accueil"
+    "title": "Liste des nodes"
   },
   "signUpPage": {
     "createAnAccount": "Créer un compte",
@@ -115,9 +120,9 @@
   "error": "Erreur",
   "couldNotMessage": "Impossible de {action} {subject}. Veuillez ressayer plus tard.",
   "fetch": "récupérer",
-  "create": "créer",
-  "update": "mettre à jour",
-  "delete": "supprimer",
+  "create": "Créer",
+  "update": "Mettre à jour",
+  "delete": "Supprimer",
   "needSavePopup": "Vous avez des modifications non enregistrées !",
   "reset": "Réinitialiser",
   "saveChanges": "Sauvegarder",
@@ -223,5 +228,11 @@
     "invalid": "Phrase secrète invalide"
   },
   "save": "Sauvegarder",
-  "cropImage": "Recadrer l'image"
+  "cropImage": "Recadrer l'image",
+  "addNode": "Ajouter un node",
+  "statusOk": "OK",
+  "statusError": "Erreur",
+  "updateNode": "Mettre à jour le node",
+  "deleteNode": "Supprimer le node",
+  "deleteNodeConfirmation": "Êtes-vous sûr de vouloir supprimer ce node ?"
 }

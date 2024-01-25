@@ -88,3 +88,24 @@ model UserEmailVerificationToken {
   user       User     @relation(fields: [identifier], references: [id], onDelete: Cascade)
   createdAt  DateTime @default(now())
 }
+
+model Node {
+  id        String   @id @default(cuid())
+  name      String
+  ip        String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  pingResults PingResult[]
+
+  @@unique([name, ip])
+}
+
+model PingResult {
+  id        String   @id @default(cuid())
+  nodeId    String
+  node      Node     @relation(fields: [nodeId], references: [id], onDelete: Cascade)
+  status    String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
