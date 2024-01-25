@@ -8,7 +8,7 @@ import https from "https"
  * @returns {Promise<number>} A promise that resolves with the status code of the response.
  */
 export const pingPromise = (ip: string): Promise<number> => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     // Internal function to handle the request with redirect tracking
     const handleRequest = (url: string, redirectsLeft: number) => {
       if (!url.startsWith("http")) url = `http://${url}` // Add http:// if no protocol is specified
@@ -31,8 +31,8 @@ export const pingPromise = (ip: string): Promise<number> => {
         }
       })
 
-      request.on("error", (err) => {
-        reject(err) // Reject the promise on error
+      request.on("error", () => {
+        resolve(0)
       })
 
       request.on("timeout", () => {
