@@ -111,7 +111,7 @@ export const generateTotpSecret = async ({ ctx: { session } }: apiInputFromSchem
     if (!user.email) return ApiError("unknownError")
     const response: z.infer<ReturnType<typeof generateTotpSecretResponseSchema>> = {
       success: true,
-      url: authenticator.keyuri(user.email, "#{PROJECT_NAME}#", secret),
+      url: authenticator.keyuri(user.email, "chaos-monkey", secret),
       mnemonic,
     }
     return response

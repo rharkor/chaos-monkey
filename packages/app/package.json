@@ -1,5 +1,5 @@
 {
-  "name": "@next-boilerplate/app",
+  "name": "@chaos-monkey/app",
   "scripts": {
     "dev": "npm run is-initialized && prisma migrate dev && cross-env FORCE_COLOR=1 next dev",
     "build": "next build",

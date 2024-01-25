@@ -1,5 +1,5 @@
 {
-  "name": "next-boilerplate",
+  "name": "chaos-monkey",
   "private": true,
   "scripts": {
     "init": "npm run init -w packages/scripts",
@@ -20,14 +20,8 @@
   },
   "workspaces": [
     "packages/scripts",
-    "packages/app",
-    "packages/docs",
-    "packages/landing",
-    "packages/lib"
+    "packages/app"
   ],
-  "dependencies": {
-    "concurrently": "^8.2.2"
-  },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
     "@semantic-release/commit-analyzer": "^11.0.0",
@@ -38,5 +32,5 @@
     "only-allow-many": "^1.2.2",
     "semantic-release": "^23.0.0"
   },
-  "version": "3.3.0-rec.1"
+  "version": "3.4.0"
 }
