@@ -1,0 +1,42 @@
+{
+  "name": "next-boilerplate",
+  "private": true,
+  "scripts": {
+    "init": "npm run init -w packages/scripts",
+    "init:env": "npm run init:env -w packages/scripts",
+    "depcheck": "npm run depcheck -w packages/scripts",
+    "dev": "npm run dev -w packages/app",
+    "dev:all": "concurrently \"npm run dev -w packages/app\" \"npm run dev -w packages/landing\" \"npm run dev -w packages/docs\"",
+    "is-initialized": "npm run is-initialized -w packages/scripts",
+    "lint": "npm run lint --ws",
+    "lint:fix": "npm run lint:fix --ws",
+    "prettier": "prettier --check \"**/*.{js,jsx,ts,tsx}\"",
+    "prettier:fix": "prettier --write \"**/*.{js,jsx,ts,tsx}\"",
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "test": "npm run test --ws",
+    "build": "npm run build --ws",
+    "start": "npm run start --ws",
+    "preinstall": "npx --yes only-allow-many npm"
+  },
+  "workspaces": [
+    "packages/scripts",
+    "packages/app",
+    "packages/docs",
+    "packages/landing",
+    "packages/lib"
+  ],
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "devDependencies": {
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^11.0.0",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^9.0.4",
+    "@semantic-release/npm": "^11.0.0",
+    "@semantic-release/release-notes-generator": "^12.0.0",
+    "only-allow-many": "^1.2.2",
+    "semantic-release": "^23.0.0"
+  },
+  "version": "3.3.0-rec.1"
+}
