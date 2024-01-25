@@ -9,6 +9,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV NODE_ENV production
 
 COPY package.json .
+COPY package-lock.json .
 COPY packages/app/prisma/schema.prisma ./packages/app/prisma/schema.prisma
 
 RUN npm i --only=production
