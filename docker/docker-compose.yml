@@ -4,7 +4,7 @@ services:
   app:
     build:
       context: ../packages/app
-      dockerfile: packages/app/dockerfile
+      dockerfile: Dockerfile
     container_name: chaos-monkey_app
     restart: unless-stopped
     logging:
@@ -17,7 +17,7 @@ services:
   crons:
     build:
       context: ../packages/app
-      dockerfile: packages/app/crons/dockerfile
+      dockerfile: Dockerfile
     container_name: chaos-monkey_crons
     restart: unless-stopped
     logging:
