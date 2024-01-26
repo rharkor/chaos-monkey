@@ -241,5 +241,8 @@
   "enable": "Enable",
   "deleteSessionData": "Delete session",
   "nodeName": "Node name",
-  "nodeIp": "Node ip"
+  "nodeIp": "Node ip",
+  "updateSession": "Update session",
+  "basePoints": "Base points",
+  "damagePerHit": "Damage per hit"
 }

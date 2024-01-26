@@ -241,5 +241,8 @@
   "enable": "Activer",
   "deleteSessionData": "Supprimer la session",
   "nodeName": "Nom du node",
-  "nodeIp": "IP du node"
+  "nodeIp": "IP du node",
+  "updateSession": "Mettre à jour la session",
+  "basePoints": "Points de base",
+  "damagePerHit": "Dégâts par coup"
 }

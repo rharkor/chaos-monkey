@@ -4,7 +4,6 @@ import { prisma } from "@/lib/prisma"
 import { getNodesResponseSchema } from "@/lib/schemas/nodes"
 import { handleApiError } from "@/lib/utils/server-utils"
 import { apiInputFromSchema } from "@/types"
-import { basePoints, damagePerHit } from "@/types/constants"
 
 export const getNodes = async ({}: apiInputFromSchema<undefined>) => {
   try {
@@ -18,12 +17,18 @@ export const getNodes = async ({}: apiInputFromSchema<undefined>) => {
       },
     })
 
+    const session = await prisma.session.findFirst()
+    if (!session) throw new Error("Session not found")
+    const basePoints = session.basePoints
+
     const data: z.infer<ReturnType<typeof getNodesResponseSchema>> = {
       nodes: nodes.map((node) => {
-        const points =
-          basePoints -
-          damagePerHit *
-            node.pingResults.filter((result) => parseInt(result.status) < 200 || parseInt(result.status) >= 300).length
+        const points = basePoints
+          ? basePoints -
+            node.pingResults
+              .filter((result) => parseInt(result.status) < 200 || parseInt(result.status) >= 300)
+              .reduce((acc, result) => acc + result.damage, 0)
+          : undefined
         return {
           id: node.id,
           name: node.name,

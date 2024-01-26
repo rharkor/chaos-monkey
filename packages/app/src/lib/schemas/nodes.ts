@@ -59,7 +59,7 @@ export const getNodesResponseSchema = () =>
             createdAt: z.string(),
           })
         ),
-        points: z.number(),
+        points: z.number().optional(),
       })
     ),
   })
@@ -68,11 +68,15 @@ export const getSessionResponseSchema = () =>
   z.object({
     enabled: z.boolean(),
     id: z.string(),
+    basePoints: z.number().optional().nullable(),
+    damagePerHit: z.number().optional().nullable(),
   })
 
 export const updateSessionSchema = () =>
   z.object({
     enabled: z.boolean(),
+    damagePerHit: z.coerce.number().optional(),
+    basePoints: z.coerce.number().optional(),
     id: z.string(),
   })
 

@@ -63,7 +63,7 @@ export default function Node({
       </CardHeader>
       <CardBody className="z-10 flex flex-col gap-2">
         <p className="text-foreground text-center text-xl font-medium">
-          {node.points}
+          {node.points ?? "---"}
           <span className="text-muted-foreground ml-1 text-xs">{dictionary.points}</span>
         </p>
         <div className="flex flex-row justify-center gap-1">
@@ -81,6 +81,7 @@ export default function Node({
                 </>
               }
               key={index}
+              isDisabled={status.isSkel}
             >
               <div
                 className={cn("h-5 w-2 rounded-full", {

@@ -23,6 +23,7 @@ new CronJob(
     async function pingNodes() {
       const session = await prisma.session.findFirst()
       if (!session || !session.enabled) return
+      const damagePerHit = session.damagePerHit
       const nodes = await prisma.node.findMany()
       await Promise.all(
         nodes.map(async (node) => {
@@ -37,6 +38,7 @@ new CronJob(
                   },
                 },
                 status: pingResult.toString(),
+                damage: damagePerHit ?? 0,
               },
             })
             .catch(() => {})

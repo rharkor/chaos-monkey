@@ -10,6 +10,7 @@ import { Button, Input, Spinner } from "@nextui-org/react"
 
 import AddNode from "./add-node"
 import Node from "./node"
+import UpdateSession from "./update-session"
 
 export default function NodesPageContent({ isLoggedIn }: { isLoggedIn: boolean }) {
   const dictionary = useDictionary()
@@ -44,7 +45,7 @@ export default function NodesPageContent({ isLoggedIn }: { isLoggedIn: boolean }
       })[]
     | null = nodes.data
     ? nodes.data.nodes
-        .sort((a, b) => b.points - a.points)
+        .sort((a, b) => (b.points ?? 0) - (a.points ?? 0))
         .map((node, index) => ({
           ...node,
           rank: index + 1,
@@ -59,7 +60,7 @@ export default function NodesPageContent({ isLoggedIn }: { isLoggedIn: boolean }
           <div className="flex flex-row justify-end gap-2">
             <Button
               isDisabled={session.isLoading || session.data?.enabled}
-              onClick={handleDeleteSessionData}
+              onPress={handleDeleteSessionData}
               isLoading={deleteSessionDataMutation.isLoading}
               color="danger"
               variant="flat"
@@ -68,12 +69,13 @@ export default function NodesPageContent({ isLoggedIn }: { isLoggedIn: boolean }
             </Button>
             <Button
               isDisabled={session.isLoading}
-              onClick={handleToggleSession}
+              onPress={handleToggleSession}
               isLoading={updateSessionMutation.isLoading || deleteSessionDataMutation.isLoading}
               color={session.data?.enabled ? "danger" : "success"}
             >
               {session.data?.enabled ? dictionary.disable : dictionary.enable} session
             </Button>
+            <UpdateSession />
             <AddNode />
           </div>
         )}

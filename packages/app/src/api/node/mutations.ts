@@ -283,13 +283,15 @@ export const updateNode = async ({ input, ctx: { session } }: apiInputFromSchema
 export const updateSession = async ({ input, ctx: { session } }: apiInputFromSchema<typeof updateSessionSchema>) => {
   ensureLoggedIn(session)
   try {
-    const { enabled, id } = input
+    const { enabled, id, basePoints, damagePerHit } = input
     await prisma.session.update({
       where: {
         id,
       },
       data: {
         enabled,
+        basePoints,
+        damagePerHit,
       },
     })
     return { success: true }
