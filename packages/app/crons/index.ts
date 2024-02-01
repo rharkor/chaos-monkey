@@ -60,3 +60,44 @@ new CronJob(
   true,
   "Europe/Paris"
 )
+
+new CronJob(
+  //* Every minute
+  "* * * * * *",
+  async () => {
+    const maxDurationWarning = 1000 * 60 * 2 // 5 minutes
+    const name = "Auto-stop session"
+    const now = new Date()
+    //? Do something
+    async function autoStopSession() {
+      const session = await prisma.session.findFirst()
+      if (!session || !session.enabled) return
+      const now = new Date()
+      const maxActiveTime = 1000 * 60 * 60 * 24 // 24 hours
+      const needToBeStopped = session.updatedAt.getTime() + maxActiveTime < now.getTime()
+      if (needToBeStopped) {
+        await prisma.session.update({
+          where: {
+            id: session.id,
+          },
+          data: {
+            enabled: false,
+          },
+        })
+      }
+    }
+    await autoStopSession().catch((err) => {
+      logger.error(
+        `[${now.toLocaleString()}] ${name} started at ${now.toLocaleString()} and failed after ${
+          new Date().getTime() - now.getTime()
+        }ms`
+      )
+      throw err
+    })
+    const took = new Date().getTime() - now.getTime()
+    if (took > maxDurationWarning) logger.warn(`[${now.toLocaleString()}] ${name} took ${took}ms`)
+  },
+  null,
+  true,
+  "Europe/Paris"
+)

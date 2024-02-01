@@ -112,8 +112,10 @@ model PingResult {
 }
 
 model Session {
-  id           String  @id @default(cuid())
-  enabled      Boolean @default(false)
+  id           String   @id @default(cuid())
+  enabled      Boolean  @default(false)
   basePoints   Int?
   damagePerHit Int?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @default(now()) @updatedAt
 }
