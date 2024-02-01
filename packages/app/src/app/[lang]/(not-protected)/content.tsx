@@ -6,6 +6,7 @@ import { z } from "zod"
 import { useDictionary } from "@/contexts/dictionary/utils"
 import { getNodesResponseSchema } from "@/lib/schemas/nodes"
 import { trpc } from "@/lib/trpc/client"
+import { cn } from "@/lib/utils"
 import { Button, Input, Spinner } from "@nextui-org/react"
 
 import AddNode from "./add-node"
@@ -81,7 +82,11 @@ export default function NodesPageContent({ isLoggedIn }: { isLoggedIn: boolean }
         )}
       </div>
       <Input placeholder="Search..." value={search} onValueChange={setSearch} />
-      <div className="relative flex flex-1 flex-row flex-wrap gap-2">
+      <div
+        className={cn("relative flex flex-row flex-wrap gap-2", {
+          "flex-1": !nodesFilled,
+        })}
+      >
         {nodesFilled ? (
           nodesFilled
             .filter((node) => node.name.toLowerCase().includes(search.toLowerCase()))
